@@ -1,21 +1,21 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import { createServer } from 'http'
+import express, { Express } from 'express'
+import cors from 'cors'
 
-dotenv.config();
+import authHandler from './handler/auth.handler'
 
-const app: Express = express();
-const port = process.env.PORT;
+const app: Express = express()
 
-app.use((req, res, next) => {
-  console.log('Time:', Date.now())
-  next()
-})
+app.use(
+  cors({
+    origin: process.env.allowHost || true,
+  })
+)
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
+app.use(express.json())
 
+app.use('/api/auth', authHandler)
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
-});
+export const server = createServer(app)
+
+export default app
