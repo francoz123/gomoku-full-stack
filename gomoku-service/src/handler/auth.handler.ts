@@ -49,6 +49,7 @@ authHandler.post(
 
 authHandler.post(
   '/login',
+    validateSchema(loginSchema),
   async (req: Request<{}, {}, LoginInput['body']>, res: Response) => {
     try {
       // Get user input
