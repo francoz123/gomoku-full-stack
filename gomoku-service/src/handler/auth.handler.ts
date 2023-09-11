@@ -6,6 +6,7 @@ import {
   LoginInput,
   RegisterInput,
   registerSchema,
+  loginSchema,
 } from '../schema/auth.schema'
 import { signJwt } from '../util/jwt'
 
