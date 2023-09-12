@@ -11,7 +11,7 @@ import {
 import { signJwt } from '../util/jwt'
 
 const authHandler = express.Router()
-
+// require('crypto').randomBytes(64).toString('hex')
 authHandler.post(
   '/register',
   validateSchema(registerSchema),
@@ -55,19 +55,23 @@ authHandler.post(
     try {
       // Get user input
       const { username, password } = req.body
+      console.log([username, password])
 
       // Validate if user exist in our database
       const user = await getUserByUsername(username)
 
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
+        console.log('User logged in')
+        console.log({ username, _id: user._id })
         const token = signJwt({ username, _id: user._id })
-
+        console.log(token)
         // user
         return res.status(200).json({ _id: user._id, token })
       }
       return res.status(400).send('Invalid Credentials')
     } catch (err) {
+      console.log(err)
       return res.status(500).send(err)
     }
   }
