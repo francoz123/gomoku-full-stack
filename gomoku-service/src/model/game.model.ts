@@ -11,24 +11,19 @@ export interface GameDocument extends Document {
    createdAt?: Date; 
    updatedAt?: Date; 
  } 
-
-export  type GameState = { 
-   _id?: string | undefined 
-   board: string[][] 
-   moves:number[][] 
-   moveNumber:number 
-   boardSize: number 
-   turn:string 
-   date: string 
-   winner: string | null 
-   gameOver:boolean 
-   lastMove:[number, number] | null 
- }
   
- const userSchema = new mongoose.Schema({ 
+ const GameSchema = new mongoose.Schema({ 
    username: { type: String, require: true, unique: true}, 
    password: { type: String, require: true}, 
+   moves: {type: number[][], require: true},
+   moveNumber: {type: number, require: true}, 
+   boardSize: {type: number, require: true}, 
+   turn:string: {type: string, require: true},
+   date: {type: string, require: true}, 
+   winner: {type: string | null, require: true}, 
+   gameOver: {type: boolean, require: true}, 
+   lastMove:[number, number] | null 
    // The timestamps option tells Mongoose to assign createdAt and updatedAt fields to your schema. The type assigned is Date. 
  },{ timestamps: true }) 
   
- export default mongoose.model<UserDocument>('User', userSchema)
+ export default mongoose.model<GameDocument>('Game', userSchema)
