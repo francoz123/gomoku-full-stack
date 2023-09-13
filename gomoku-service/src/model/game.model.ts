@@ -13,7 +13,7 @@ export interface GameDocument extends Document {
  } 
   
  const GameSchema = new mongoose.Schema({ 
-   username: { type: String, require: true, unique: true}, 
+   board: { type: String[][], require: true}, 
    password: { type: String, require: true}, 
    moves: {type: number[][], require: true},
    moveNumber: {type: number, require: true}, 
@@ -22,7 +22,7 @@ export interface GameDocument extends Document {
    date: {type: string, require: true}, 
    winner: {type: string | null, require: true}, 
    gameOver: {type: boolean, require: true}, 
-   lastMove:[number, number] | null 
+   lastMove: {type: [number, number] | null, require: true}
    // The timestamps option tells Mongoose to assign createdAt and updatedAt fields to your schema. The type assigned is Date. 
  },{ timestamps: true }) 
   
