@@ -1,9 +1,29 @@
-export interface UserDocument extends Document { 
-   username: string; 
-   password: string; 
+export interface GameDocument extends Document {
+   board: string[][] 
+   moves:number[][] 
+   moveNumber:number 
+   boardSize: number 
+   turn:string 
+   date: string 
+   winner: string | null 
+   gameOver:boolean 
+   lastMove:[number, number] | null 
    createdAt?: Date; 
    updatedAt?: Date; 
  } 
+
+export  type GameState = { 
+   _id?: string | undefined 
+   board: string[][] 
+   moves:number[][] 
+   moveNumber:number 
+   boardSize: number 
+   turn:string 
+   date: string 
+   winner: string | null 
+   gameOver:boolean 
+   lastMove:[number, number] | null 
+ }
   
  const userSchema = new mongoose.Schema({ 
    username: { type: String, require: true, unique: true}, 
