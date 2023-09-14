@@ -120,39 +120,44 @@ import { signJwt } from '../util/jwt'
 
 const authHandler = express.Router()
 // require('crypto').randomBytes(64).toString('hex')
-authHandler.put(
-  '/gameplay',
-  validateSchema(registerSchema),
-  async (req: Request<{}, {}, RegisterInput['body']>, res: Response) => {
-    try {
-      const { username, password } = req.body
+// Modify a booking
+bookingHandler.put(
+  '/:id',
+  validateSchema(updateBookingSchema),
+  async (req: Request, res: Response) => {
+    // TODO: decode user id from token
+    const userId = req.userId
+    const booking = req.body
+    const bookingId = req.params.id
 
-      // check if user already exist
-      // Validate if user exist in our database
-      const existingUser = await getUserByUsername(username)
+    const bookingsForTheSession = await getBookingsByFilter({
+      sessionId: new mongoose.Types.ObjectId(booking.sessionId),
+      _id: { $ne: new mongoose.Types.ObjectId(bookingId) },
+    })
+    const allOccupiedSeats = bookingsForTheSession.length
+      ? bookingsForTheSession.map((b) => b.seats).flat()
+      : []
+    const overlappingSeats = !!intersection(allOccupiedSeats, booking.seats)
+      .length
+    if (overlappingSeats) return res.sendStatus(400)
 
-      if (existingUser) {
-        return res.status(409).send('User Already Exist. Please Login')
+    const newBooking = await updateBooking(bookingId, userId, {
+      ...booking,
+      userId,
+    })
+    if (!newBooking) return res.sendStatus(404)
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(
+          JSON.stringify({
+            updateBy: userId,
+            sessionId: booking.sessionId,
+            occupiedSeats: [...allOccupiedSeats, ...booking.seats],
+          })
+        )
       }
-
-      //Encrypt user password
-      const encryptedPassword = await bcrypt.hash(password, 10)
-
-      // Create user in our database
-      const newUser = await createUser({
-        username,
-        password: encryptedPassword,
-      })
-
-      // Create token
-      const token = signJwt({ username, _id: newUser._id })
-
-      // return new user with token
-      res.status(200).json({ _id: newUser._id, token })
-    } catch (err) {
-      console.log(err)
-      return res.status(500).send(err)
-    }
+    })
+    return res.status(200).json(newBooking)
   }
 )
 
