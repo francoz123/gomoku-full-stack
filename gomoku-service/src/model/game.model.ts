@@ -1,29 +1,30 @@
+import mongoose, { Document } from "mongoose"
+
 export interface GameDocument extends Document {
-   board: string[][] 
-   moves:number[][] 
+   board: string[]
+   moves:number[]
    moveNumber:number 
    boardSize: number 
    turn:string 
    date: string 
-   winner: string | null 
+   winner: string
    gameOver:boolean 
-   lastMove:[number, number] | null 
+   lastMove:[number, number]
    createdAt?: Date; 
    updatedAt?: Date; 
  } 
   
  const GameSchema = new mongoose.Schema({ 
-   board: { type: String[][], require: true}, 
-   password: { type: String, require: true}, 
-   moves: {type: number[][], require: true},
-   moveNumber: {type: number, require: true}, 
-   boardSize: {type: number, require: true}, 
-   turn:string: {type: string, require: true},
-   date: {type: string, require: true}, 
-   winner: {type: string | null, require: true}, 
-   gameOver: {type: boolean, require: true}, 
-   lastMove: {type: [number, number] | null, require: true}
+   board: { type: [String], require: true}, 
+   moves: {type: [Number], require: true},
+   moveNumber: {type: Number, require: true}, 
+   boardSize: {type: Number, require: true}, 
+   turn: {type: String, require: true},
+   date: {type: String, require: true}, 
+   winner: {type: String, require: true}, 
+   gameOver: {type: Boolean, require: true}, 
+   lastMove: {type: [Number], require: true}
    // The timestamps option tells Mongoose to assign createdAt and updatedAt fields to your schema. The type assigned is Date. 
  },{ timestamps: true }) 
   
- export default mongoose.model<GameDocument>('Game', userSchema)
+ export default mongoose.model<GameDocument>('Game', GameSchema)
