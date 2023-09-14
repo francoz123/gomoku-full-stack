@@ -120,8 +120,8 @@ import { signJwt } from '../util/jwt'
 
 const authHandler = express.Router()
 // require('crypto').randomBytes(64).toString('hex')
-authHandler.post(
-  '/gameInfo',
+authHandler.put(
+  '/gameplay',
   validateSchema(registerSchema),
   async (req: Request<{}, {}, RegisterInput['body']>, res: Response) => {
     try {
