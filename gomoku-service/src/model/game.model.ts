@@ -27,4 +27,4 @@ export interface GameDocument extends Document {
    // The timestamps option tells Mongoose to assign createdAt and updatedAt fields to your schema. The type assigned is Date. 
  },{ timestamps: true }) 
   
- export default mongoose.model<GameDocument>('Game', GameSchema)
+ export default mongoose.model/* <GameDocument> */('Game', GameSchema)

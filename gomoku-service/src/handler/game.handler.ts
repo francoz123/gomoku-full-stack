@@ -11,7 +11,7 @@ import {
 
 import { createGame, getGameByGameId, updateGame } from '../service/game.service'
 import { signJwt } from '../util/jwt'
-import WebSocket from 'ws'
+//import WebSocket from 'ws'
 import { wss } from '../websocket'
 import { GameRecord, GameState, DisplayItem, GameUpdate } from '../types'
 import gameModel from '../model/game.model'
@@ -49,7 +49,7 @@ function countPieces(yCoord:number, xCoord:number) {
         let x1 = x + dx
         let y1 = y + dy
 
-        if (!validSquare(x1, y1, boardSize)) continue
+        if (!validSquare(x1, y1)) continue
 
         square = board[y1][x1]
         
@@ -57,7 +57,7 @@ function countPieces(yCoord:number, xCoord:number) {
           currernCount++
           x1 += dx
           y1 += dy
-          if (validSquare(x1, y1, boardSize)) square = board[y1][x1]
+          if (validSquare(x1, y1)) square = board[y1][x1]
           else break
         }
         counts[1+dy][1+dx] = currernCount-1
@@ -100,11 +100,11 @@ function leaveGame() {
 const gamePlayHandler = express.Router()
 
 gamePlayHandler.put(
-  '/gameplay',
-  validateSchema(updateGameSchema),
+  '/gameplay'/* ,
+  validateSchema(updateGameSchema) */,
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
-    const gameState: GameState = JSON.parse(req.body)
+    const gameState: GameState = req.body
 
     board = gameState.board
     moves = gameState.moves
@@ -113,7 +113,7 @@ gamePlayHandler.put(
     turn = gameState.turn
     let winner = gameState.winner
 
-    const game = new gameModel({
+    const newG = new gameModel({
       board: board.reduce((x, v) => [...x, ...v], []), 
       moves: moves.reduce((x, v) => [...x, ...v], []),
       moveNumber: gameState.moveNumber, 
@@ -135,30 +135,38 @@ gamePlayHandler.put(
       
       if (draw()) {
         gameOver = true
-        game.winner = 'Draw'
+        winner = 'Draw'
        
       }
-
-      game._id = gameState._id
-      game.gameOver = gameOver
-      game.winner = winner
-
-      await game.save()
-
+      const filter = {_id: gameState._id}
+      const update = {
+        board: board.reduce((x, v) => [...x, ...v], []), 
+        moves: moves.reduce((x, v) => [...x, ...v], []), 
+        lastMove: lastMove, 
+        winner: winner, 
+        gameOver: gameOver, 
+        turn: turn,
+        moveNumber: gameState.moveNumber
+      }
+      /* const g = await gameModel.findById(gameState._id)
+      newG.gameOver = gameOver
+      newG.winner = winner */
+      /* if (g){
+        
+      } */
+      await gameModel.findOneAndUpdate(filter, update)
       res.send({
         _id:gameState._id,
         winner: turn,
         gameOver: gameOver
       })
-    }
-    
-    
-    let newGame = await gameModel.create(game)
-    res.send({
+    }else {
+      let newGame = await gameModel.create(newG)
+      res.status(200).send({
       _id:newGame._id,
       winner: turn,
       gameOver: gameOver
     })
-})
+}})
 
 export default gamePlayHandler
