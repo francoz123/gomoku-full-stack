@@ -127,17 +127,18 @@ gamePlayHandler.put(
 
     if (gameState._id){
       let count = countPieces(lastMove[0], lastMove[1])
-      winner = turn
       if (count >= 5) {
         gameOver = true
         winner = turn
+        //console.log('fb',count)
       }
       
       if (draw()) {
         gameOver = true
         winner = 'Draw'
-       
+        //console.log('sb',count)
       }
+
       const filter = {_id: gameState._id}
       const update = {
         board: board.reduce((x, v) => [...x, ...v], []), 
