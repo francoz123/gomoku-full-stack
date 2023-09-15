@@ -16,18 +16,11 @@ import { wss } from '../websocket'
 import { GameRecord, GameState, DisplayItem, GameUpdate } from '../types'
 import gameModel from '../model/game.model'
 
-let gameOver: boolean = false
-let turn = ''
-let board: string[][] = []
-let newBoard = []
-let moves: number[][] = []
-let boardSize = 0
-
-function validSquare(x: number, y:number): boolean{
+function validSquare(x: number, y:number, boardSize:number): boolean{
   return (x >=0 && x<=boardSize && y>=0 && y<boardSize)
 }
 
-function countPieces(yCoord:number, xCoord:number) {
+function countPieces(yCoord:number, xCoord:number, turn:string, board:string[][], boardSize:number) {
   let count = 1;
   let currentTurn = turn
   let counts = [[0,0,0], [0,0,0], [0,0,0]]
@@ -40,7 +33,7 @@ function countPieces(yCoord:number, xCoord:number) {
       let x = xCoord + dx
       var y = yCoord + dy
 
-      if (!validSquare(x, y)) continue
+      if (!validSquare(x, y, boardSize)) continue
 
       let square = board[y][x]
 
@@ -49,7 +42,7 @@ function countPieces(yCoord:number, xCoord:number) {
         let x1 = x + dx
         let y1 = y + dy
 
-        if (!validSquare(x1, y1)) continue
+        if (!validSquare(x1, y1, boardSize)) continue
 
         square = board[y1][x1]
         
@@ -57,7 +50,7 @@ function countPieces(yCoord:number, xCoord:number) {
           currernCount++
           x1 += dx
           y1 += dy
-          if (validSquare(x1, y1)) square = board[y1][x1]
+          if (validSquare(x1, y1, boardSize)) square = board[y1][x1]
           else break
         }
         counts[1+dy][1+dx] = currernCount-1
@@ -72,7 +65,7 @@ function countPieces(yCoord:number, xCoord:number) {
   return count
 }
 
-function draw() {
+function draw(board:string[][], boardSize:number) {
   for (let i = 0; i < boardSize; i++) {
     for (let j = 0; j < boardSize; j++) {
       if(board[i][j] === '') return false
@@ -105,13 +98,14 @@ gamePlayHandler.put(
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
     const gameState: GameState = req.body
-
-    board = gameState.board
-    moves = gameState.moves
-    boardSize = gameState.boardSize
+    console.log('After: ',gameState.moveNumber,gameState, gameState.lastMove)
+    let board = gameState.board
+    let moves = gameState.moves
+    let boardSize = gameState.boardSize
     let lastMove = gameState.lastMove
-    turn = gameState.turn
-    let winner = gameState.winner
+    let turn = gameState.turn
+    let winner = turn
+    let gameOver = gameState.gameOver
 
     const newG = new gameModel({
       board: board.reduce((x, v) => [...x, ...v], []), 
@@ -126,19 +120,17 @@ gamePlayHandler.put(
     })
 
     if (gameState._id){
-      let count = countPieces(lastMove[0], lastMove[1])
+      let count = countPieces(lastMove[0], lastMove[1], turn, board, boardSize)
       if (count >= 5) {
         gameOver = true
         winner = turn
-        //console.log('fb',count)
       }
       
-      if (draw()) {
+      if (draw(board, boardSize)) {
         gameOver = true
         winner = 'Draw'
-        //console.log('sb',count)
       }
-
+      console.log('Winner', winner)
       const filter = {_id: gameState._id}
       const update = {
         board: board.reduce((x, v) => [...x, ...v], []), 
@@ -158,14 +150,14 @@ gamePlayHandler.put(
       await gameModel.findOneAndUpdate(filter, update)
       res.send({
         _id:gameState._id,
-        winner: turn,
+        winner: winner,
         gameOver: gameOver
       })
     }else {
       let newGame = await gameModel.create(newG)
       res.status(200).send({
       _id:newGame._id,
-      winner: turn,
+      winner: winner,
       gameOver: gameOver
     })
 }})
