@@ -74,23 +74,46 @@ function draw(board:string[][], boardSize:number) {
   return true
 }
 
-function leaveGame() {
-  let currenGame = board.map((row, rowIndex) => {
-    return row.map ((square, squareIndex) => 
-      [board[rowIndex][squareIndex], moves[rowIndex][squareIndex]])
-    })
-  let games: GameRecord[] | any = []
-  let gameLogs = window.localStorage.getItem('gameLogs');
+function getGameRecord(id:string, board:string[], moves:number[], boardSize:number,
+  date:string, winner:string) {
 
-  if (gameLogs) games = JSON.parse(gameLogs)
+  let currentGame: (string | number)[][][] = []
 
-  let id = games.length + 1
-  //let date = getDate()
-  //games.push ({'id':id, 'boardSize':boardSize, 'game':currenGame, 'date':date, 'winner': winner})
-  window.localStorage.setItem('gameLogs',JSON.stringify (games))
+  for (let i = 0; i < boardSize; i++) {
+    currentGame[i] = [];
+    for (let j = 0; j < boardSize; j++) {
+      let col =  i * boardSize + j
+      currentGame[i][j] = [board[col], moves[col]]
+    }
+  }
+
+  return ({'id':id, 'boardSize':boardSize, 'game':currentGame, 'date':date, 'winner': winner})
 }
 
 const gamePlayHandler = express.Router()
+
+gamePlayHandler.get(
+  '/games'/* ,
+  validateSchema(updateGameSchema) */,
+  async (req: Request, res: Response) => {
+    // TODO: decode user id from token
+    let gameRecords: GameRecord[] = []
+    const games = await gameModel.find()
+    console.log(games)
+    if (games.length > 1) {console.log("Length > 1")
+
+      gameRecords = games.map(g => 
+        getGameRecord(g._id.toString(), 
+        g.board, 
+        g.moves, 
+        g.boardSize? g.boardSize : 0, 
+        g.date? g.date : '', 
+        g.winner? g.winner : '')
+      )
+    }
+    console.log(gameRecords)
+    res.status(200).send(gameRecords)
+})
 
 gamePlayHandler.put(
   '/gameplay'/* ,
