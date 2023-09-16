@@ -10,7 +10,7 @@ import {
 } from '../schema/game.schema'
 
 import { createGame, getGameByGameId, updateGame } from '../service/game.service'
-import { signJwt } from '../util/jwt'
+import { verifyJwt } from '../util/jwt'
 //import WebSocket from 'ws'
 import { wss } from '../websocket'
 import { GameRecord, GameState, DisplayItem, GameUpdate } from '../types'
@@ -97,6 +97,7 @@ gamePlayHandler.get(
   validateSchema(updateGameSchema) */,
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
+    //const user: User = verifyJwt(req.header.token)
     let gameRecord: GameRecord = {
       id: undefined,
       boardSize: 0,
