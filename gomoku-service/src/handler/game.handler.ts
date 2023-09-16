@@ -75,7 +75,7 @@ function draw(board:string[][], boardSize:number) {
 }
 
 function getGameRecord(id:string, board:string[], moves:number[], boardSize:number,
-  date:string, winner:string) {
+  gameNumber:number, date:string, winner:string) {
 
   let currentGame: (string | number)[][][] = []
 
@@ -87,10 +87,38 @@ function getGameRecord(id:string, board:string[], moves:number[], boardSize:numb
     }
   }
 
-  return ({'id':id, 'boardSize':boardSize, 'game':currentGame, 'date':date, 'winner': winner})
+  return ({'id':id, 'boardSize':boardSize, 'gameNumber':gameNumber, 'game':currentGame, 'date':date, 'winner': winner})
 }
 
 const gamePlayHandler = express.Router()
+
+gamePlayHandler.get(
+  '/gamelog/:id'/* ,
+  validateSchema(updateGameSchema) */,
+  async (req: Request, res: Response) => {
+    // TODO: decode user id from token
+    let gameRecord: GameRecord = {
+      id: undefined,
+      boardSize: 0,
+      gameNumber: 0,
+      game: [],
+      date: '',
+      winner: ''
+    }
+    const game = await gameModel.findOne({_id:req.params.id}).lean()
+    if (game) {console.log("Length > 1")
+      gameRecord = getGameRecord(
+          game._id.toString(), 
+          game.board, 
+          game.moves, 
+          game.boardSize? game.boardSize : 0,
+          game.gameNumber? game.gameNumber : 0, 
+          game.date? game.date : '', 
+          game.winner? game.winner : '')
+    }
+    console.log(gameRecord)
+    res.status(200).send(gameRecord)
+})
 
 gamePlayHandler.get(
   '/games'/* ,
@@ -98,17 +126,19 @@ gamePlayHandler.get(
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
     let gameRecords: GameRecord[] = []
-    const games = await gameModel.find()
-    console.log(games)
-    if (games.length > 1) {console.log("Length > 1")
+    const games = await gameModel.find().lean()
+    console.log(games.length)
+    if (games.length > 0) {console.log("Length > 1")
 
       gameRecords = games.map(g => 
-        getGameRecord(g._id.toString(), 
-        g.board, 
-        g.moves, 
-        g.boardSize? g.boardSize : 0, 
-        g.date? g.date : '', 
-        g.winner? g.winner : '')
+        {return getGameRecord(
+          g._id.toString(), 
+          g.board, 
+          g.moves, 
+          g.boardSize? g.boardSize : 0,
+          g.gameNumber? g.gameNumber : 0, 
+          g.date? g.date : '', 
+          g.winner? g.winner : '')}
       )
     }
     console.log(gameRecords)
@@ -130,10 +160,12 @@ gamePlayHandler.put(
     let winner = turn
     let gameOver = gameState.gameOver
 
+    let id = (await gameModel.find()).length + 1
     const newG = new gameModel({
       board: board.reduce((x, v) => [...x, ...v], []), 
       moves: moves.reduce((x, v) => [...x, ...v], []),
       moveNumber: gameState.moveNumber, 
+      gameNumber: id,
       boardSize: gameState.boardSize, 
       turn: gameState.turn,
       date: gameState.date, 

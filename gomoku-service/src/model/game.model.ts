@@ -18,6 +18,7 @@ export interface GameDocument extends Document {
    board: { type: [String], require: true}, 
    moves: {type: [Number], require: true},
    moveNumber: {type: Number, require: true}, 
+   gameNumber: {type: Number, require: true},
    boardSize: {type: Number, require: true}, 
    turn: {type: String, require: true},
    date: {type: String, require: true}, 
