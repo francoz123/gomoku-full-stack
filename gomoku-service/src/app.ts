@@ -18,6 +18,7 @@ app.use(express.json())
 app.use('/api/auth', authHandler)
 app.use(deserializeUser)
 app.use('/api/game', gamePlayHandler)
+app.use('/api/game/gameplay/update', gamePlayHandler)
 
 export const server = createServer(app)
 

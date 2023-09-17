@@ -2,18 +2,19 @@ import { object, string, number, array, TypeOf, boolean } from 'zod'
 
 const payload = {
   body: object({
-    _id: string({
-      required_error: 'GameID id is required',
-    }),
     board: array(
-      string({
-        required_error: 'Seats are required',
-      })
+      array(
+        string({
+          required_error: 'Seats are required',
+        })
+      )
     ).nonempty(),
     moves: array(
-      number({
-        required_error: 'Moves are required',
-      })
+      array(
+        number({
+          required_error: 'Moves are required',
+        })
+      )
     ).nonempty(),
     moveNumber: number({
       required_error: 'Move Number is required',
@@ -33,7 +34,7 @@ const payload = {
     gameOver: boolean({
       required_error: 'Move Number is required',
     }),
-    lastmove: array(
+    lastMove: array(
       number({
         required_error: 'lastMove is required',
       })
@@ -43,7 +44,7 @@ const payload = {
 
 const getParams = {
   params: object({
-    _id: string({
+    id: string({
       required_error: 'ID id is required',
     }),
   }),
@@ -51,7 +52,7 @@ const getParams = {
 
 const updateDeleteParams = {
   params: object({
-    id: string({
+    _id: string({
       required_error: 'Game id is required',
     }),
   }),
@@ -61,8 +62,48 @@ export const createGameSchema = object({
   ...payload,
 })
 export const updateGameSchema = object({
-  ...payload,
-  ...updateDeleteParams,
+  body: object({
+    _id: string({
+      required_error: 'Game id is required',
+    }),
+    board: array(
+      array(
+        string({
+          required_error: 'Seats are required',
+        })
+      )
+    ).nonempty(),
+    moves: array(
+      array(
+        number({
+          required_error: 'Moves are required',
+        })
+      )
+    ).nonempty(),
+    moveNumber: number({
+      required_error: 'Move Number is required',
+    }),
+    boardSize: number({
+      required_error: 'Board size is required',
+    }),
+    turn: string({
+      required_error: 'Turn is required',
+    }),
+    date: string({
+      required_error: 'Date is required',
+    }),
+    winner: string({
+      required_error: 'Winner is required',
+    }),
+    gameOver: boolean({
+      required_error: 'Move Number is required',
+    }),
+    lastMove: array(
+      number({
+        required_error: 'lastMove is required',
+      })
+    ).nonempty(),
+  }),
 })
 export const deleteGameSchema = object({
   ...updateDeleteParams,

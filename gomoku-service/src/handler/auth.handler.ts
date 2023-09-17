@@ -55,7 +55,7 @@ authHandler.post(
     try {
       // Get user input
       const { username, password } = req.body
-      console.log([username, password])
+      console.log(req.body)
 
       // Validate if user exist in our database
       const user = await getUserByUsername(username)

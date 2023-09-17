@@ -5,7 +5,8 @@ import {
   CreateGameInput, 
   UpdateGameInput, 
   ReadGamesInput, 
-  deleteGameSchema, 
+  createGameSchema,
+  getGamesSchema,
   updateGameSchema
 } from '../schema/game.schema'
 
@@ -93,8 +94,8 @@ function getGameRecord(id:string, board:string[], moves:number[], boardSize:numb
 const gamePlayHandler = express.Router()
 
 gamePlayHandler.get(
-  '/gamelog/:id'/* ,
-  validateSchema(updateGameSchema) */,
+  '/gamelog/:id',
+  validateSchema(getGamesSchema),
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
     //const user: User = verifyJwt(req.header.token)
@@ -106,30 +107,32 @@ gamePlayHandler.get(
       date: '',
       winner: ''
     }
-    const game = await gameModel.findOne({_id:req.params.id}).lean()
-    if (game) {console.log("Length > 1")
-      gameRecord = getGameRecord(
-          game._id.toString(), 
-          game.board, 
-          game.moves, 
-          game.boardSize? game.boardSize : 0,
-          game.gameNumber? game.gameNumber : 0, 
-          game.date? game.date : '', 
-          game.winner? game.winner : '')
+    
+    try {
+      const game = await gameModel.findOne({_id:req.params.id}).lean()
+      if (game) {
+        gameRecord = getGameRecord(
+            game._id.toString(), 
+            game.board, 
+            game.moves, 
+            game.boardSize? game.boardSize : 0,
+            game.gameNumber? game.gameNumber : 0, 
+            game.date? game.date : '', 
+            game.winner? game.winner : '')
+      }
+      res.status(200).send(gameRecord)
+    } catch (error) {
+      res.send("Game not found")
     }
-    console.log(gameRecord)
-    res.status(200).send(gameRecord)
 })
 
 gamePlayHandler.get(
-  '/games'/* ,
-  validateSchema(updateGameSchema) */,
+  '/games',
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
     let gameRecords: GameRecord[] = []
     const games = await gameModel.find().lean()
-    console.log(games.length)
-    if (games.length > 0) {console.log("Length > 1")
+    if (games.length > 0) {
 
       gameRecords = games.map(g => 
         {return getGameRecord(
@@ -142,17 +145,15 @@ gamePlayHandler.get(
           g.winner? g.winner : '')}
       )
     }
-    console.log(gameRecords)
     res.status(200).send(gameRecords)
 })
 
 gamePlayHandler.put(
-  '/gameplay'/* ,
-  validateSchema(updateGameSchema) */,
+  '/gameplay',
+  validateSchema(createGameSchema),
   async (req: Request, res: Response) => {
     // TODO: decode user id from token
     const gameState: GameState = req.body
-    console.log('After: ',gameState.moveNumber,gameState, gameState.lastMove)
     let board = gameState.board
     let moves = gameState.moves
     let boardSize = gameState.boardSize
@@ -175,7 +176,7 @@ gamePlayHandler.put(
       lastMove: gameState.lastMove
     })
 
-    if (gameState._id){
+    /*if (gameState._id){ 
       let count = countPieces(lastMove[0], lastMove[1], turn, board, boardSize)
       if (count >= 5) {
         gameOver = true
@@ -186,7 +187,6 @@ gamePlayHandler.put(
         gameOver = true
         winner = 'Draw'
       }
-      console.log('Winner', winner)
       const filter = {_id: gameState._id}
       const update = {
         board: board.reduce((x, v) => [...x, ...v], []), 
@@ -197,19 +197,14 @@ gamePlayHandler.put(
         turn: turn,
         moveNumber: gameState.moveNumber
       }
-      /* const g = await gameModel.findById(gameState._id)
-      newG.gameOver = gameOver
-      newG.winner = winner */
-      /* if (g){
-        
-      } */
+      
       await gameModel.findOneAndUpdate(filter, update)
       res.send({
         _id:gameState._id,
         winner: winner,
         gameOver: gameOver
       })
-    }else {
+    }else  */{
       let newGame = await gameModel.create(newG)
       res.status(200).send({
       _id:newGame._id,
@@ -217,5 +212,62 @@ gamePlayHandler.put(
       gameOver: gameOver
     })
 }})
+
+gamePlayHandler.put(
+  '/gameplay/update',
+  validateSchema(updateGameSchema),
+  async (req: Request, res: Response) => {
+    // TODO: decode user id from token
+    const gameState: GameState = req.body
+    let board = gameState.board
+    let moves = gameState.moves
+    let boardSize = gameState.boardSize
+    let lastMove = gameState.lastMove
+    let turn = gameState.turn
+    let winner = turn
+    let gameOver = gameState.gameOver
+
+    let id = (await gameModel.find()).length + 1
+    const newG = new gameModel({
+      board: board.reduce((x, v) => [...x, ...v], []), 
+      moves: moves.reduce((x, v) => [...x, ...v], []),
+      moveNumber: gameState.moveNumber, 
+      gameNumber: id,
+      boardSize: gameState.boardSize, 
+      turn: gameState.turn,
+      date: gameState.date, 
+      winner: gameState.winner, 
+      gameOver: gameOver, 
+      lastMove: gameState.lastMove
+    })
+
+    let count = countPieces(lastMove[0], lastMove[1], turn, board, boardSize)
+    if (count >= 5) {
+      gameOver = true
+      winner = turn
+    }
+    
+    if (draw(board, boardSize)) {
+      gameOver = true
+      winner = 'Draw'
+    }
+    const filter = {_id: gameState._id}
+    const update = {
+      board: board.reduce((x, v) => [...x, ...v], []), 
+      moves: moves.reduce((x, v) => [...x, ...v], []), 
+      lastMove: lastMove, 
+      winner: winner, 
+      gameOver: gameOver, 
+      turn: turn,
+      moveNumber: gameState.moveNumber
+    }
+    
+    await gameModel.findOneAndUpdate(filter, update)
+    res.send({
+      _id:gameState._id,
+      winner: winner,
+      gameOver: gameOver
+    })
+  })
 
 export default gamePlayHandler

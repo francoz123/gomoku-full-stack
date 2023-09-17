@@ -1,5 +1,5 @@
 export  type GameState = {
-  _id?: string | undefined
+  _id?: string
   board: string[][]
   moves:number[][]
   moveNumber:number
