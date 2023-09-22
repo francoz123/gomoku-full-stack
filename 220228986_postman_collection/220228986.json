@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "c239cc7e-26f2-4c9c-997e-aafc3f838996",
+		"name": "Gomoku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29494811"
+	},
+	"item": [
+		{
+			"name": "games",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiX2lkIjoiNjRmZWY4NWE1YmJhZGE0NGUzOGY4ZGNhIiwiaWF0IjoxNjk0ODYwNzM0LCJleHAiOjE2OTQ4ODk1MzR9.V-Pz7gPl02j-6hhfqtkJPocEpbJfxjmruVZ9NJG2F3-0rs2Vx-iI09KsnabvQs3Ra2K_0MGf5zWPmp8anR6Ck09E34fxJk2jFzZaG8IwXhayXYSApwx0ofuowZUGF-FX9JLChnFYhTHEZ5DsQ_4dgFeK9n_AOALWtwAySTRTnmh7qFzghhOJX5vzdlUQKja6UWfkAW5--0yH4XA386IjiIJe64ZImf8ugvse-c8_TJSjYw_34td2-XTn59rO5QKZd6uSY_tOK8O86pXiY3vB52dEt6XYFvaHjxiTqnoq_4JxcmpSB21AOxj0wMfWUejcYsIaoxdVR4SFb0Xs0WbYDg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiX2lkIjoiNjRmZWY4NWE1YmJhZGE0NGUzOGY4ZGNhIiwiaWF0IjoxNjk0ODYwMzU1LCJleHAiOjE2OTQ4ODkxNTV9.Pne6EcgmYQQ5_iobuj7giYkWpooFC7ldf2UKlu57sowy--CwmuQP9AQSdBIMa56a6hWIOBZy2OaiEedg45rB4Gts3NtWJVMlrQewGdX435Os7Jtw2ihyOYdH_BXV2pItlWo5L8xuFe61bV9UI0Z_bkEYTxHHrOSmrmrH_XlIrtsEIUEv7bvi1us_C-vgjvUNJTgH-R6l4mL9I_pWuq1HTvdDzJ7P6V7ODk-dp2pAcblnVzcELbNgezay_H-IhFE866IIaA8iGkKQFMjHet4-Bgkqns4ljO78QvnKopLD82oK7vaJZRtxUmgiDgSwrQYBKY8aPO-cLgpVA7Ty_hYrKQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/game/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"game",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"username\": \"admin\", \r\n     \"password\": \"admin\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"username\": \"user75\",\r\n     \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Game log 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiX2lkIjoiNjRmZWY4NWE1YmJhZGE0NGUzOGY4ZGNhIiwiaWF0IjoxNjk0ODYwNzM0LCJleHAiOjE2OTQ4ODk1MzR9.V-Pz7gPl02j-6hhfqtkJPocEpbJfxjmruVZ9NJG2F3-0rs2Vx-iI09KsnabvQs3Ra2K_0MGf5zWPmp8anR6Ck09E34fxJk2jFzZaG8IwXhayXYSApwx0ofuowZUGF-FX9JLChnFYhTHEZ5DsQ_4dgFeK9n_AOALWtwAySTRTnmh7qFzghhOJX5vzdlUQKja6UWfkAW5--0yH4XA386IjiIJe64ZImf8ugvse-c8_TJSjYw_34td2-XTn59rO5QKZd6uSY_tOK8O86pXiY3vB52dEt6XYFvaHjxiTqnoq_4JxcmpSB21AOxj0wMfWUejcYsIaoxdVR4SFb0Xs0WbYDg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/game/gamelog/6504df9872e22ce910c58383",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"game",
+						"gamelog",
+						"6504df9872e22ce910c58383"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Game log 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiX2lkIjoiNjRmZWY4NWE1YmJhZGE0NGUzOGY4ZGNhIiwiaWF0IjoxNjk0ODYwNzM0LCJleHAiOjE2OTQ4ODk1MzR9.V-Pz7gPl02j-6hhfqtkJPocEpbJfxjmruVZ9NJG2F3-0rs2Vx-iI09KsnabvQs3Ra2K_0MGf5zWPmp8anR6Ck09E34fxJk2jFzZaG8IwXhayXYSApwx0ofuowZUGF-FX9JLChnFYhTHEZ5DsQ_4dgFeK9n_AOALWtwAySTRTnmh7qFzghhOJX5vzdlUQKja6UWfkAW5--0yH4XA386IjiIJe64ZImf8ugvse-c8_TJSjYw_34td2-XTn59rO5QKZd6uSY_tOK8O86pXiY3vB52dEt6XYFvaHjxiTqnoq_4JxcmpSB21AOxj0wMfWUejcYsIaoxdVR4SFb0Xs0WbYDg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/game/gamelog/65050b8ffdee1d899a80a0a9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"game",
+						"gamelog",
+						"65050b8ffdee1d899a80a0a9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create game",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"board\": [\r\n        [\r\n            \"b\",\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ]\r\n    ],\r\n    \"moves\": [\r\n        [\r\n            1,\r\n            0,\r\n            0,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            0,\r\n            0,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            0,\r\n            0,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            0,\r\n            0,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            0,\r\n            0,\r\n            0,\r\n            0\r\n        ]\r\n    ],\r\n    \"moveNumber\": 0,\r\n    \"boardSize\": 5,\r\n    \"turn\": \"b\",\r\n    \"date\": \"9/17/2023\",\r\n    \"winner\": \"\",\r\n    \"gameOver\": false,\r\n    \"lastMove\": [\r\n        -1,\r\n        -1\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/game/gameplay",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"game",
+						"gameplay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update game",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiX2lkIjoiNjRmZWY4NWE1YmJhZGE0NGUzOGY4ZGNhIiwiaWF0IjoxNjk0ODYwNzM0LCJleHAiOjE2OTQ4ODk1MzR9.V-Pz7gPl02j-6hhfqtkJPocEpbJfxjmruVZ9NJG2F3-0rs2Vx-iI09KsnabvQs3Ra2K_0MGf5zWPmp8anR6Ck09E34fxJk2jFzZaG8IwXhayXYSApwx0ofuowZUGF-FX9JLChnFYhTHEZ5DsQ_4dgFeK9n_AOALWtwAySTRTnmh7qFzghhOJX5vzdlUQKja6UWfkAW5--0yH4XA386IjiIJe64ZImf8ugvse-c8_TJSjYw_34td2-XTn59rO5QKZd6uSY_tOK8O86pXiY3vB52dEt6XYFvaHjxiTqnoq_4JxcmpSB21AOxj0wMfWUejcYsIaoxdVR4SFb0Xs0WbYDg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"board\": [\r\n        [\r\n            \"b\",\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"w\",\r\n            \"b\",\r\n            \"\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"w\",\r\n            \"b\",\r\n            \"\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"\",\r\n            \"w\",\r\n            \"b\",\r\n            \"\"\r\n        ],\r\n        [\r\n            \"\",\r\n            \"\",\r\n            \"\",\r\n            \"w\",\r\n            \"b\"\r\n        ]\r\n    ],\r\n    \"moves\": [\r\n        [\r\n            1,\r\n            1,\r\n            0,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            2,\r\n            3,\r\n            0,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            4,\r\n            5,\r\n            0,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            0,\r\n            6,\r\n            7,\r\n            0\r\n        ],\r\n        [\r\n            0,\r\n            0,\r\n            0,\r\n            8,\r\n            9\r\n        ]\r\n    ],\r\n    \"moveNumber\": 0,\r\n    \"boardSize\": 5,\r\n    \"turn\": \"b\",\r\n    \"date\": \"9/17/2023\",\r\n    \"winner\": \"b\",\r\n    \"gameOver\": false,\r\n    \"lastMove\": [\r\n        -1,\r\n        -1\r\n    ],\r\n    \"_id\": \"6506848836afa49d39519b04\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/game/gameplay/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"game",
+						"gameplay",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
