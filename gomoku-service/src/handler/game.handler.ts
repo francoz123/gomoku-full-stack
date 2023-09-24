@@ -10,7 +10,7 @@ import {
   updateGameSchema
 } from '../schema/game.schema'
 
-import { createGame, getGameByGameId, updateGame } from '../service/game.service'
+//import { createGame, getGameByGameId, updateGame } from '../service/game.service'
 import { verifyJwt } from '../util/jwt'
 //import WebSocket from 'ws'
 import { wss } from '../websocket'
@@ -159,7 +159,7 @@ gamePlayHandler.put(
     let boardSize = gameState.boardSize
     let lastMove = gameState.lastMove
     let turn = gameState.turn
-    let winner = turn
+    let winner = ''
     let gameOver = gameState.gameOver
 
     let id = (await gameModel.find()).length + 1
@@ -224,7 +224,7 @@ gamePlayHandler.put(
     let boardSize = gameState.boardSize
     let lastMove = gameState.lastMove
     let turn = gameState.turn
-    let winner = turn
+    let winner = gameState.winner
     let gameOver = gameState.gameOver
 
     let id = (await gameModel.find()).length + 1

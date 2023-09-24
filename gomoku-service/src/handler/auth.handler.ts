@@ -42,7 +42,6 @@ authHandler.post(
       // return new user with token
       res.status(200).json({ _id: newUser._id, token })
     } catch (err) {
-      console.log(err)
       return res.status(500).send(err)
     }
   }
@@ -55,23 +54,18 @@ authHandler.post(
     try {
       // Get user input
       const { username, password } = req.body
-      console.log(req.body)
 
       // Validate if user exist in our database
       const user = await getUserByUsername(username)
 
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
-        console.log('User logged in')
-        console.log({ username, _id: user._id })
         const token = signJwt({ username, _id: user._id })
-        console.log(token)
         // user
         return res.status(200).json({ _id: user._id, token })
       }
       return res.status(400).send('Invalid Credentials')
     } catch (err) {
-      console.log(err)
       return res.status(500).send(err)
     }
   }
