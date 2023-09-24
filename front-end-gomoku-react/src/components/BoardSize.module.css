@@ -1,0 +1,35 @@
+.boardSizeFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.boardSizeForm {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  gap: 0.5rem;
+}
+
+.boardSizeSelect {
+      width: 25rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+.startButton {
+  display: block;
+  width: 100%;
+  padding: 10px;
+}
+
+#startButton {
+  display: block;
+  width: 100%;
+  padding: 10px;
+}

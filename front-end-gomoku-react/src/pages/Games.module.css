@@ -1,0 +1,55 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  width: 50%;
+}
+
+.log {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap:2px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.logs{
+  display: flex; 
+  justify-content: space-between;
+  width: 100%;
+}
+
+.record {
+  width: 35%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.gameInfo {
+  display: flex;
+  width: 80%;
+}
+

@@ -1,0 +1,95 @@
+.board {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.square {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 2rem;
+  background-color: rgb(96, 150, 134);
+  border: 1px solid black;
+  }
+
+.white{
+  background-color: #FFFFFF;
+}
+
+.black{
+  background-color: #000000;
+  color: white;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+  width: 100%;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  width: 50%;
+}
+.log {
+  background-color: blue;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  gap:2px;
+}
+.log #d{
+  display: flex; 
+  background-color:teal;
+}
+
+.record {
+  width: 50%;
+ /*  background-color: yellow; */
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.authentication .submit {
+  width: 100%;
+}
+
+.info {
+  font-weight: bold;
+}
+
+.piece {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid black;
+  z-index: 100;
+  /* background-color: brown; */
+}

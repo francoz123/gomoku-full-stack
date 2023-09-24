@@ -1,0 +1,28 @@
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  max-width: 400px;
+  font-size: 1rem;
+  padding: 0 1rem;
+  color: #FFFFFF;
+  font-weight: bold;
+  text-align: center;
+}
+
+.a {
+  display: inline-block;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.loginButton {
+  display: inline-block;
+  color: #FFFFFF;
+  border: none;
+  font-weight: bold;
+  background-color: inherit;
+  padding: 5px;
+}

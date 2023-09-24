@@ -1,0 +1,51 @@
+.board {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+  gap: 3rem;
+  width: 30%;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  width: 50%;
+}
+
+.info {
+  font-weight: bold;
+}
+
+.piece {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid black;
+  z-index: 100;
+  /* background-color: brown; */
+}

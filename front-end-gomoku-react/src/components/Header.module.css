@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 5rem;
+    background-color: #4F58DF;
+    color: #FFFFFF;
+  }
+
+  .logo {
+    font-size: 2.5rem;
+    padding: 0 1rem;
+    color: #FFFFFF;
+    font-weight: bolder;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+  }
+
+ 
