@@ -27,6 +27,7 @@ function GameLog() {
   useEffect(() => {
     if (!user) navigate ('/login')
     else getGameFromServer()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function getGameFromServer() {
@@ -67,8 +68,9 @@ function GameLog() {
   return (
     <main>
       <div className={styles.info}>
-      {game.winner !== 'Draw' ? 'Winner: ' + (game.winner==='b'?'Black':'White')
-        : 'Draw Game'
+      {game.winner? 
+        game.winner !== 'Draw' ? 'Winner: ' + (game.winner==='b'?'Black':'White') : 'Draw Game'
+        : 'Not completed'
       }
       </div>
           {elements}

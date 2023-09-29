@@ -55,11 +55,10 @@ function Game() {
     const API_HOST = process.env.REACT_APP_API_HOST
       
       if (gameState._id){
-        console.log("game is ",gameState._id)
-        const update = await put<GameState, GameUpdate>(
-          `${API_HOST}/api/game/gameplay/update`, gameState
-        )
-        return update
+          const update = await put<GameState, GameUpdate>(
+            `${API_HOST}/api/game/gameplay/update`, gameState
+          )
+          return update
       }else {
         const update = await put<GameState, GameUpdate>(
           `${API_HOST}/api/game/gameplay`, gameState
@@ -75,10 +74,6 @@ function Game() {
   function changeTurn() {
     setTurn(t => t = t === 'b'? 'w': 'b')
   }
-
-  /* function validSquare(x: number, y:number): boolean{
-    return (x >=0 && x<=boardSize && y>=0 && y<boardSize)
-  } */
 
   async function updateBoard(x:number, y:number) {
     if (gameOver) return
@@ -99,7 +94,6 @@ function Game() {
       turn: turn
     })
 
-    console.log('before: ',moveNumber,{...gameState}, gameState.lastMove)
     const update = await updateServer({...gameState,
       lastMove: [x,y],
       board: newBoard,

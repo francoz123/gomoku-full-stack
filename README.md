@@ -6,7 +6,7 @@
 2. Start the server
 - Switch to the gomoku-servic directory and the command bellow to downlaod dependencies.
 ```bash
-npm start
+npm install
 ```
 run the command below
 ```bash

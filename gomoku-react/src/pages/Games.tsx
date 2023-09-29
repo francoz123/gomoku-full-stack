@@ -12,26 +12,32 @@ export default function Games() {
   let gr: GameRecord[] = []
   const [gamesLength, setGameLength] = useState(0)
   const [games, setGames] = useState(gr)
+  const  [message, setMassege] = useState('Fetching games...')
   //let games: GameRecord[] = savedGAmes?  JSON.parse(savedGAmes) : null
 
   useEffect(() => {
     if (!user) navigate ('/login')
     else getGamesFromServer()
-  }, [])
+  }, [navigate, user])
 
   async function getGamesFromServer() {
-    const API_HOST = process.env.REACT_APP_API_HOST
+    try {
+      const API_HOST = process.env.REACT_APP_API_HOST
       const gameRecords = await get<GameRecord[]>(
         `${API_HOST}/api/game/games`
       )
       
       setGames(gameRecords)
       setGameLength(gameRecords.length)
+      if (gameRecords.length === 0) setMassege('No games available')
+    } catch (error) {
+      setMassege('Something went wrong. your token may have expired.')
+    }
   }
 
   return (
     <main>
-      {gamesLength===0 && <p className={styles.info}>No games available</p>}
+      {gamesLength===0 && <p className={styles.info}>{message}</p>}
       {gamesLength>0 && <div className={styles.container}>
         {games.map((game) => 
           (<div className={styles.logs}>

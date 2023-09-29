@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mongo_db:
+    image: mongo
+    ports: 
+      - 27017:27017
+  client-app:
+    build: ./gomoku-react
+    environment:
+      - REACT_APP_API_HOST=http://server-app:8080
+    volumes:
+      - ./gomoku-react/src:/gomoku-react/src
+      - ./gomoku-react/public:/gomoku-react/public
+  server-app: 
+    build: ./gomoku-service
+    environment:
+      - dbURI=mongodb://mongo-db:27027
+    volumes:
+      - ./gomoku-service/src:./gomoku-service/src
+    ports:
+      - 8080:8080
