@@ -20,7 +20,7 @@ function GameLog() {
     gameNumber: 0,
     game: [],
     date: '',
-    winner: ''
+    winner: 'none'
   }
   const [game, setGame] = useState(g)
 
@@ -67,11 +67,12 @@ function GameLog() {
 
   return (
     <main>
+      <div className={styles.info}>{game.winner === 'none' && 'Fetching game details...'}</div>
       <div className={styles.info}>
-      {game.winner? 
-        game.winner !== 'Draw' ? 'Winner: ' + (game.winner==='b'?'Black':'White') : 'Draw Game'
-        : 'Not completed'
-      }
+        {game.winner === 'Draw' && 'Draw Game'}
+        {game.winner !== 'b' && 'Winner: Black'}
+        {game.winner === 'w' && 'Winner: White'}
+        {game.winner !== '' && 'Not completed'}
       </div>
           {elements}
       <div className={styles.buttonContainer}>
