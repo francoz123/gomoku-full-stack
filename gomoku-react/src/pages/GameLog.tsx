@@ -70,9 +70,9 @@ function GameLog() {
       <div className={styles.info}>{game.winner === 'none' && 'Fetching game details...'}</div>
       <div className={styles.info}>
         {game.winner === 'Draw' && 'Draw Game'}
-        {game.winner !== 'b' && 'Winner: Black'}
+        {game.winner === 'b' && 'Winner: Black'}
         {game.winner === 'w' && 'Winner: White'}
-        {game.winner !== '' && 'Not completed'}
+        {game.winner === '' && 'Not completed'}
       </div>
           {elements}
       <div className={styles.buttonContainer}>
