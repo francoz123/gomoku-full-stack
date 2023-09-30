@@ -9,7 +9,7 @@ type UserProviderProps = {
   children: React.ReactNode
 }
 
-const API_HOST = process.env.REACT_APP_API_HOST || ''//'http://localhost:8080'
+const API_HOST = process.env.REACT_APP_API_HOST || 'https://gomoku-service2.onrender.com'
 
 export default function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useLocalStorage<User | undefined>('user', undefined)
