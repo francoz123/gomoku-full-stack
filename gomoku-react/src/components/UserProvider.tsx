@@ -47,7 +47,7 @@ export default function UserProvider({ children }: UserProviderProps) {
   const register = async (username: string, password: string) => {
     try {
       const user = await post<Credential, User>(
-        `${API_HOST}/api/auth/register`,
+        `${API_HOST}api/auth/register`,
         {
           username,
           password,
