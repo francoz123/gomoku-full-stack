@@ -16,6 +16,6 @@ services:
     environment:
       - dbURI=mongodb://mongo-db:27027
     volumes:
-      - ./gomoku-service/src:./gomoku-service/src
+      - ./gomoku-service/src:/gomoku-service/src
     ports:
       - 8080:8080
