@@ -42,6 +42,7 @@ export const deserializeUser = async (
     }
 
     // Inject user id into request
+    // @ts-ignore
     req.userId = user._id
     next()
   } catch (err: any) {

@@ -1,12 +1,13 @@
 import type { Server } from 'http'
 import WebSocket from 'ws'
-
+// @ts-ignore
 export let wss: WebSocket.Server
 
 let numberOfClients = 0
 
 export const startWebSocketServer = (server: Server) => {
   wss = new WebSocket.Server({ server })
+  // @ts-ignore
   wss.on('connection', (ws) => {
     numberOfClients++
     console.log(

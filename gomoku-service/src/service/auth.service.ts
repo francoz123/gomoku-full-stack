@@ -1,3 +1,4 @@
+// @ts-ignore
 import mongoose, { DocumentDefinition } from 'mongoose'
 import UserModel, { UserDocument } from '../model/user.model'
 

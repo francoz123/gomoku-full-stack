@@ -1,3 +1,4 @@
+// @ts-ignore
 import jwt, { SignOptions } from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import fs from 'fs'
