@@ -56,12 +56,12 @@ function Game() {
       
       if (gameState._id){
           const update = await put<GameState, GameUpdate>(
-            `${API_HOST}/api/game/gameplay/update`, gameState
+            `${API_HOST}api/game/gameplay/update`, gameState
           )
           return update
       }else {
         const update = await put<GameState, GameUpdate>(
-          `${API_HOST}/api/game/gameplay`, gameState
+          `${API_HOST}api/game/gameplay`, gameState
         )
         return update
       }

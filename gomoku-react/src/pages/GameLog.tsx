@@ -33,7 +33,7 @@ function GameLog() {
   async function getGameFromServer() {
     const API_HOST = process.env.REACT_APP_API_HOST
       const gameRecord = await get<GameRecord>(
-        `${API_HOST}/api/game/gamelog/${id}`
+        `${API_HOST}api/game/gamelog/${id}`
       )
       setGame(gameRecord)
   }

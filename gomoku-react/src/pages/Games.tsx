@@ -24,7 +24,7 @@ export default function Games() {
     try {
       const API_HOST = process.env.REACT_APP_API_HOST
       const gameRecords = await get<GameRecord[]>(
-        `${API_HOST}/api/game/games`
+        `${API_HOST}api/game/games`
       )
       
       setGames(gameRecords)
