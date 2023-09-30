@@ -1,3 +1,4 @@
+// @ts-ignore
 import mongoose, { DocumentDefinition, FilterQuery } from 'mongoose'
 import GameModel , { GameDocument } from '../model/game.model'
 
