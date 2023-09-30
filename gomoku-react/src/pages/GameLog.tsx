@@ -67,7 +67,7 @@ function GameLog() {
 
   return (
     <main>
-      <div className={styles.info}>{game.winner === 'none' && 'Fetching game details...'}</div>
+      <div className={''}>{game.winner === 'none' && 'Fetching game details...'}</div>
       <div className={styles.info}>
         {game.winner === 'Draw' && 'Draw Game'}
         {game.winner === 'b' && 'Winner: Black'}
