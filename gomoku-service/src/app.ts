@@ -15,7 +15,7 @@ app.use(
 )
 
 app.use(express.json())
-app.use('api/auth', authHandler)
+app.use('/api/auth', authHandler)
 //app.use(deserializeUser)
 app.use('/api/game', gamePlayHandler)
 app.use('/api/game/gameplay/update', gamePlayHandler)
